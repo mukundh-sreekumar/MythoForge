@@ -16,22 +16,23 @@ Each card is represented by an ERC-721 token with its own token ID and metadata.
 
 ### Main Features
 
-- Connect a MetaMask wallet
-- Mint unique ERC-721 digital game cards
-- Add card name and description
-- Assign card attributes:
-  - Rarity
-  - Attack
-  - Defense
-- Upload card images to IPFS
-- Store card metadata on IPFS
-- View cards owned by the connected wallet
-- List owned cards for sale
-- Purchase listed cards using Sepolia ETH
-- Cancel active listings
-- View active cards in the marketplace
-- Display transaction progress and error messages
-- Smart contract tests for core marketplace functionality
+* Connect a MetaMask wallet
+* Mint unique ERC-721 digital game cards
+* Add card name and description
+* Assign card attributes:
+
+  * Rarity
+  * Attack
+  * Defense
+* Upload card images to IPFS
+* Store card metadata on IPFS
+* View cards owned by the connected wallet
+* List owned cards for sale
+* Purchase listed cards using Sepolia ETH
+* Cancel active listings
+* View active cards in the marketplace
+* Display transaction progress and error messages
+* Smart contract tests for core marketplace functionality
 
 ---
 
@@ -39,36 +40,36 @@ Each card is represented by an ERC-721 token with its own token ID and metadata.
 
 ### Blockchain
 
-- Ethereum Sepolia Testnet
-- Solidity
-- ERC-721
-- OpenZeppelin
+* Ethereum Sepolia Testnet
+* Solidity
+* ERC-721
+* OpenZeppelin
 
 ### Smart Contract Development
 
-- Hardhat 3
-- ethers.js
-- Mocha
-- Chai
+* Hardhat 3
+* ethers.js
+* Mocha
+* Chai
 
 ### Frontend
 
-- React
-- TypeScript
-- Vite
-- Tailwind CSS
-- ethers.js
-- MetaMask
+* React
+* TypeScript
+* Vite
+* Tailwind CSS
+* ethers.js
+* MetaMask
 
 ### Backend
 
-- Node.js
-- Express
+* Node.js
+* Express
 
 ### Decentralized Storage
 
-- IPFS
-- Pinata
+* IPFS
+* Pinata
 
 ---
 
@@ -99,7 +100,7 @@ The main workflow of MythoForge is:
             Smart Contract
 ```
 
-## IPFS Implementation:
+## IPFS Implementation
 
 MythoForge uses IPFS to store NFT images and metadata.
 
@@ -109,24 +110,27 @@ Pinata is used as the IPFS service for uploading the files.
 
 When a user mints a card:
 
-The card image is selected in the frontend.
-The frontend requests an upload URL from the backend.
-The image is uploaded to Pinata/IPFS.
-The resulting IPFS CID is obtained.
+1. The card image is selected in the frontend.
+2. The frontend requests an upload URL from the backend.
+3. The image is uploaded to Pinata/IPFS.
+4. The resulting IPFS CID is obtained.
 
 The image is referenced using an IPFS URI:
 
+```text
 ipfs://<image-CID>
+```
+
 ### Metadata Upload
 
 After the image is uploaded, MythoForge creates metadata containing information such as:
 
-Card name
-Description
-Image URI
-Rarity
-Attack
-Defense
+* Card name
+* Description
+* Image URI
+* Rarity
+* Attack
+* Defense
 
 The metadata is then uploaded to IPFS through Pinata.
 
@@ -134,34 +138,39 @@ The resulting metadata URI is passed to the ERC-721 smart contract when the NFT 
 
 The overall process is:
 
+```text
 Card Image
-     |
-     v
+    |
+    v
 Pinata / IPFS
-     |
-     v
+    |
+    v
 Image CID
-     |
-     v
+    |
+    v
 Card Metadata
-     |
-     v
+    |
+    v
 Pinata / IPFS
-     |
-     v
+    |
+    v
 Metadata CID
-     |
-     v
+    |
+    v
 ERC-721 Token URI
+```
 
 The Pinata JWT is handled by the backend rather than being exposed directly in the frontend.
 
+---
 
-### Smart Contract:
+## Smart Contract
 
 The main smart contract is:
 
+```text
 contracts/MythoForge.sol
+```
 
 The contract implements an ERC-721 NFT marketplace using OpenZeppelin.
 
@@ -169,67 +178,88 @@ The contract implements an ERC-721 NFT marketplace using OpenZeppelin.
 
 The smart contract provides functionality for:
 
-Minting cards
-Listing cards
-Buying listed cards
-Cancelling listings
-Tracking listings
-Transferring NFT ownership
-Emitting marketplace events
+* Minting cards
+* Listing cards
+* Buying listed cards
+* Cancelling listings
+* Tracking listings
+* Transferring NFT ownership
+* Emitting marketplace events
 
 The marketplace uses ETH for purchases.
 
+---
 
 ## Testnet & Contract Address
 
 MythoForge is deployed on the Ethereum Sepolia Testnet.
 
-| Property | Value |
-|---|---|
-| Network | [Ethereum Sepolia](https://sepolia.etherscan.io/) |
-| Chain ID | `11155111` |
-| Contract | MythoForge |
+| Property         | Value                                                                                                                           |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Network          | [Ethereum Sepolia](https://sepolia.etherscan.io/)                                                                               |
+| Chain ID         | `11155111`                                                                                                                      |
+| Contract         | MythoForge                                                                                                                      |
 | Contract Address | [`0xaA7f0A43212De0AA9b3d499750e8861b320057b6`](https://sepolia.etherscan.io/address/0xaA7f0A43212De0AA9b3d499750e8861b320057b6) |
 
 The contract is deployed and can be verified on Sepolia Etherscan.
 
+---
 
-## Setup Instructions:
+## Setup Instructions
+
 ### Prerequisites
 
 Install the following:
 
-Node.js
-npm
-MetaMask
-Git
+* Node.js
+* npm
+* MetaMask
+* Git
 
 A MetaMask wallet configured for Ethereum Sepolia is required to interact with the application.
 
 You will also need Sepolia ETH for testing blockchain transactions.
 
-1. Clone the Repository
+### 1. Clone the Repository
+
+```bash
 git clone <repository-url>
 cd MythoForge
-2. Install Smart Contract Dependencies
+```
+
+### 2. Install Smart Contract Dependencies
 
 From the project root:
 
+```bash
 npm install
-3. Install Frontend Dependencies
+```
+
+### 3. Install Frontend Dependencies
+
+```bash
 cd frontend
 npm install
-4. Install Backend Dependencies
+```
+
+### 4. Install Backend Dependencies
+
+```bash
 cd ../server
 npm install
+```
 
+---
 
-## Running the Application:
+## Running the Application
+
 ### Start the Backend
 
 From the server directory:
 
+```bash
 node index.js
+```
 
 The backend runs locally and provides the functionality required by the frontend for IPFS-related operations.
 
@@ -237,33 +267,41 @@ The backend runs locally and provides the functionality required by the frontend
 
 Open another terminal and run:
 
+```bash
 cd frontend
 npm run dev
+```
 
 Vite will provide a local development URL.
 
 Open the URL in your browser and connect MetaMask to Ethereum Sepolia.
 
+---
 
-## Smart Contract Testing:
+## Smart Contract Testing
 
 The project includes automated tests for the core marketplace functionality.
 
 From the project root:
 
+```bash
 npx hardhat test
+```
 
 The current test suite contains 8 passing tests covering:
 
-NFT minting
-NFT listing
-NFT purchasing
-Listing cancellation
+* NFT minting
+* NFT listing
+* NFT purchasing
+* Listing cancellation
 
 These tests verify the core smart-contract behavior independently of the frontend.
 
+---
 
-## Project Structure:
+## Project Structure
+
+```text
 MythoForge/
 │
 ├── contracts/
@@ -297,7 +335,9 @@ MythoForge/
 ├── package-lock.json
 ├── tsconfig.json
 └── README.md
+```
 
+---
 
 ## Screenshots
 
@@ -317,7 +357,8 @@ MythoForge/
 
 ![MythoForge Marketplace](screenshots/Marketplace.png)
 
+---
 
-## License:
+## License
 
 This project was developed as a student project for educational and demonstration purposes.
