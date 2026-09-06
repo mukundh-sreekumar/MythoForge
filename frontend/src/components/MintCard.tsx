@@ -344,7 +344,7 @@ export default function MintCard({
           event.args[0].toString();
 
         alert(`Card #${mintedTokenId} minted successfully!`);
-
+        setStatus("");
         // Refresh My Collection
         onMintSuccess();
         setName("");
