@@ -64,11 +64,8 @@ app.get("/api/metadata/:cid", async (req, res) => {
     }
 
     const response = await fetch(
-  `https://ipfs.io/ipfs/${cid}`
+  `https://cyan-fancy-weasel-556.mypinata.cloud/ipfs/${cid}`
 );
-
-console.log("Pinata status:", response.status);
-console.log("Pinata headers:", Object.fromEntries(response.headers.entries()));
 
     if (!response.ok) {
       return res.status(response.status).json({

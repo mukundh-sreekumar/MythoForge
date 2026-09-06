@@ -18,7 +18,6 @@ export default function MintCard({
   const [defense, setDefense] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [status, setStatus] = useState("");
-  const [tokenId, setTokenId] = useState<string | null>(null);
 
   const [mintInProgress, setMintInProgress] =
     useState(false);
@@ -92,11 +91,6 @@ export default function MintCard({
 
       const uploadData = await uploadResponse.json();
 
-      console.log(
-        "Pinata image upload response:",
-        uploadData
-      );
-
       const cid = uploadData.data?.cid;
 
       if (!cid) {
@@ -105,11 +99,6 @@ export default function MintCard({
         );
       }
 
-      console.log("Image IPFS CID:", cid);
-      console.log(
-        "Image URI:",
-        `ipfs://${cid}`
-      );
 
       return cid;
     } catch (error) {
@@ -119,7 +108,7 @@ export default function MintCard({
       );
 
       setStatus(
-        "Image upload failed. Check the browser console."
+        "Image upload failed. Please try again."
       );
 
       return null;
@@ -154,8 +143,6 @@ export default function MintCard({
           },
         ],
       };
-
-      console.log("Metadata:", metadata);
 
       setStatus(
         "Getting Pinata metadata upload URL..."
@@ -215,11 +202,6 @@ export default function MintCard({
 
       const uploadData = await uploadResponse.json();
 
-      console.log(
-        "Pinata metadata upload response:",
-        uploadData
-      );
-
       const metadataCid =
         uploadData.data?.cid;
 
@@ -229,16 +211,6 @@ export default function MintCard({
         );
       }
 
-      console.log(
-        "Metadata IPFS CID:",
-        metadataCid
-      );
-
-      console.log(
-        "Metadata URI:",
-        `ipfs://${metadataCid}`
-      );
-
       return metadataCid;
     } catch (error) {
       console.error(
@@ -247,7 +219,7 @@ export default function MintCard({
       );
 
       setStatus(
-        "Metadata upload failed. Check the browser console."
+        "Metadata upload failed. Please try again."
       );
 
       return null;
@@ -299,7 +271,6 @@ export default function MintCard({
     setMintConfirmationPending(false);
 
     try {
-      setTokenId(null);
 
       // 1. Upload image
       const imageCid = await uploadImage();
@@ -318,11 +289,6 @@ export default function MintCard({
 
       const metadataURI =
         `ipfs://${metadataCid}`;
-
-      console.log(
-        "Final metadata URI:",
-        metadataURI
-      );
 
       // 3. Connect to MythoForge contract
       setStatus(
@@ -344,22 +310,12 @@ export default function MintCard({
       clearTimeout(confirmationTimer);
       setMintConfirmationPending(false);
 
-      console.log(
-        "Mint transaction:",
-        tx.hash
-      );
-
       setStatus(
         "Waiting for blockchain confirmation..."
       );
 
       // 5. Wait for blockchain confirmation
       const receipt = await tx.wait();
-
-      console.log(
-        "Mint transaction receipt:",
-        receipt
-      );
 
       // 6. Find CardMinted event
       const event = receipt.logs
@@ -387,19 +343,16 @@ export default function MintCard({
         const mintedTokenId =
           event.args[0].toString();
 
-        setTokenId(mintedTokenId);
-
-        setStatus(
-          "Card minted successfully!"
-        );
-
-        console.log(
-          "Minted Token ID:",
-          mintedTokenId
-        );
+        alert(`Card #${mintedTokenId} minted successfully!`);
 
         // Refresh My Collection
         onMintSuccess();
+        setName("");
+setDescription("");
+setRarity("Common");
+setAttack("");
+setDefense("");
+setImage(null);
       } else {
         setStatus(
           "NFT minted, but token ID could not be found."
@@ -604,26 +557,18 @@ export default function MintCard({
           : "Connect Wallet First"}
       </button>
 
+      {status && (
+        <p className="mt-3 text-center text-sm text-slate-600">
+          {status}
+        </p>
+      )}
+
       {/* MetaMask Confirmation Pending */}
       {mintConfirmationPending && (
         <p className="mt-3 text-center text-sm text-yellow-600">
           MetaMask confirmation is still pending.
           Please confirm or reject the transaction
           in MetaMask.
-        </p>
-      )}
-
-      {/* Status */}
-      {status && (
-        <p className="mt-5 text-center text-sm text-slate-700">
-          {status}
-        </p>
-      )}
-
-      {/* Token ID */}
-      {tokenId && (
-        <p className="mt-2 text-center font-semibold text-purple-700">
-          Token ID: {tokenId}
         </p>
       )}
     </div>

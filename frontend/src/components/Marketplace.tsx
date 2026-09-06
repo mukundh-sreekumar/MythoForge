@@ -104,10 +104,6 @@ const handleBuyCard = async (
 
     await transaction.wait();
 
-    console.log(
-      "Card purchased successfully."
-    );
-
     alert("Card purchased successfully!");
 
     setRefreshKey((prev) => prev + 1);
@@ -208,9 +204,6 @@ for (
 
   mintEvents.push(...events);
 }
-
-        console.log("Mint events found:", mintEvents.length);
-        console.log("Mint events:", mintEvents);
 
         const loadedCards: MarketplaceCard[] = [];
 
